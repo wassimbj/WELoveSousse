@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatbot Demo</title>
+    <style>
+      body {
+        background-color: #f7d9aa;
+        background-image: linear-gradient(315deg, #f7d9aa 0%, #ff9a9e 74%);
+      }
+      
+      .chat-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        max-width: 800px;
+        height: 80%;
+        max-height: 600px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        animation: fadein 1s;
+      }
+      
+      @keyframes fadein {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      
+      .chat-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        background-color: #f44336;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        padding: 10px;
+        font-size: 24px;
+        font-weight: bold;
+        animation: slidein 1s;
+      }
+      
+      
+      @keyframes slidein-top {
+        from {
+          transform: translateY(-100%);
+        }
+        to {
+          transform: translateY(0);
+        }
+      }
+      
+      .chat-history {
+        height: 300px;
+        overflow-y: scroll;
+        margin-bottom: 10px;
+        animation: slidein-left 1s;
+      }
+      
+      @keyframes slidein-left {
+        from {
+          transform: translateX(-100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+      
+      .message-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        animation: fadein 1s;
+      }
+      
+      .message-container.user-message {
+        justify-content: flex-end;
+      }
+      
+      .message {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 5px 10px;
+        border-radius: 10px;
+        max-width: 70%;
+        word-wrap: break-word;
+      }
+      
+      .message-container.bot-message .message {
+        background-color: #e6e6e6;
+      }
+      
+      .chat-message {
+        display: flex;
+        justify-content: space-between;
+      }
+      
+      #input-message {
+        flex-grow: 1;
+        margin-right: 10px;
+        padding: 5px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+      
+      #send-button {
+        background-color: #f44336;
+        color: #fff;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+        animation: pulse 1s infinite;
+      }
+      
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      
+      #send-button:hover {
+        background-color: #FF8C00;
+        animation: none;
+      }
+      
+      .user-message .message {
+        background-color: #f44336;
+        color: #fff;
+        animation: slidein-left 1s;
+      }
+      
+      .bot-message .message {
+        background-color: #e6e6e6;
+        color: #333;
+        animation: slidein-right 1s;
+      }
+      
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+        background-color: #f2f2f2;
+      }
+      
+      
+      
+    </style>
+  </head>
+  <body>
+    <div class="chat-container">
+      <div class="chat-header">
+        <h2>WE LOVE SOUSSE</h2>
+      </div>
+      <div class="chat-history" id="chat-history">
+        <div class="message-container bot-message">
+          <div class="message">Hi there! How can I help you today?</div>
+        </div>
+      </div>
+      <div class="chat-message">
+        <input type="text" id="input-message" placeholder="Type your message...">
+        <button id="send-button">Send</button>
+      </div>
+    </div>
+    
+    <script>
+      const chatHistory = document.getElementById("chat-history");
+      const inputMessage = document.getElementById("input-message");
+      const sendButton = document.getElementById("send-button");
+      
+      sendButton.addEventListener("click", async () => {
+        const userMessage = inputMessage.value.trim();
+        if (userMessage !== "") {
+          addMessage(userMessage, "user-message");
+          const botMessage = await sendRequest(userMessage);
+          inputMessage.value = "";
+          addMessage(botMessage, "bot-message");
+        }
+      });
+      
+      function addMessage(message, className) {
+        const messageContainer = document.createElement("div");
+        messageContainer.classList.add("message-container", className);
+      
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("message");
+        messageElement.innerText = message;
+      
+        messageContainer.appendChild(messageElement);
+        chatHistory.appendChild(messageContainer);
+      }
+      
+      async function sendRequest(userMessage) {
+        const response = await fetch(`/get?msg=${userMessage}`);
+        const jsonResponse = await response.json();
+        console.log(jsonResponse);
+        const botMessage = jsonResponse[0]["text"];
+        return botMessage;
+      }
+      
+      
+      
+
+    </script>
+  </body>
+</html>
