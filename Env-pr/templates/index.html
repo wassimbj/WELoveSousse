@@ -1,219 +1,161 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Chatbot Demo</title>
-    <style>
-      body {
-        background-color: #f7d9aa;
-        background-image: linear-gradient(315deg, #f7d9aa 0%, #ff9a9e 74%);
-      }
-      
-      .chat-container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 80%;
-        max-width: 800px;
-        height: 80%;
-        max-height: 600px;
-        border-radius: 10px;
-        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
-        overflow: hidden;
-        animation: fadein 1s;
-      }
-      
-      @keyframes fadein {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      
-      .chat-header {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #fff;
-        background-color: #f44336;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        padding: 10px;
-        font-size: 24px;
-        font-weight: bold;
-        animation: slidein 1s;
-      }
-      
-      
-      @keyframes slidein-top {
-        from {
-          transform: translateY(-100%);
-        }
-        to {
-          transform: translateY(0);
-        }
-      }
-      
-      .chat-history {
-        height: 300px;
-        overflow-y: scroll;
-        margin-bottom: 10px;
-        animation: slidein-left 1s;
-      }
-      
-      @keyframes slidein-left {
-        from {
-          transform: translateX(-100%);
-        }
-        to {
-          transform: translateX(0);
-        }
-      }
-      
-      .message-container {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-        animation: fadein 1s;
-      }
-      
-      .message-container.user-message {
-        justify-content: flex-end;
-      }
-      
-      .message {
-        background-color: #fff;
-        border: 1px solid #ccc;
-        padding: 5px 10px;
-        border-radius: 10px;
-        max-width: 70%;
-        word-wrap: break-word;
-      }
-      
-      .message-container.bot-message .message {
-        background-color: #e6e6e6;
-      }
-      
-      .chat-message {
-        display: flex;
-        justify-content: space-between;
-      }
-      
-      #input-message {
-        flex-grow: 1;
-        margin-right: 10px;
-        padding: 5px;
-        border: none;
-        border-radius: 5px;
-        font-size: 14px;
-      }
-      
-      #send-button {
-        background-color: #f44336;
-        color: #fff;
-        padding: 5px 10px;
-        border: none;
-        border-radius: 5px;
-        font-size: 14px;
-        cursor: pointer;
-        animation: pulse 1s infinite;
-      }
-      
-      @keyframes pulse {
-        0% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.2);
-        }
-        100% {
-          transform: scale(1);
-        }
-      }
-      
-      #send-button:hover {
-        background-color: #FF8C00;
-        animation: none;
-      }
-      
-      .user-message .message {
-        background-color: #f44336;
-        color: #fff;
-        animation: slidein-left 1s;
-      }
-      
-      .bot-message .message {
-        background-color: #e6e6e6;
-        color: #333;
-        animation: slidein-right 1s;
-      }
-      
-      ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-        background-color: #f2f2f2;
-      }
-      
-      
-      
-    </style>
-  </head>
-  <body>
-    <div class="chat-container">
-      <div class="chat-header">
-        <h2>WE LOVE SOUSSE</h2>
-      </div>
-      <div class="chat-history" id="chat-history">
-        <div class="message-container bot-message">
-          <div class="message">Hi there! How can I help you today?</div>
-        </div>
-      </div>
-      <div class="chat-message">
-        <input type="text" id="input-message" placeholder="Type your message...">
-        <button id="send-button">Send</button>
+
+<head>
+  <title>Chatbot Demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <!-- <div class="chat-container">
+    <div class="chat-header">
+      <h2>WE LOVE SOUSSE</h2>
+    </div>
+    <div class="chat-history" id="chat-history">
+      <div class="message-container bot-message">
+        <div class="message">Hi there! How can I help you today?</div>
       </div>
     </div>
-    
-    <script>
-      const chatHistory = document.getElementById("chat-history");
-      const inputMessage = document.getElementById("input-message");
-      const sendButton = document.getElementById("send-button");
-      
-      sendButton.addEventListener("click", async () => {
-        const userMessage = inputMessage.value.trim();
-        if (userMessage !== "") {
-          addMessage(userMessage, "user-message");
-          const botMessage = await sendRequest(userMessage);
-          inputMessage.value = "";
-          addMessage(botMessage, "bot-message");
-        }
-      });
-      
-      function addMessage(message, className) {
-        const messageContainer = document.createElement("div");
-        messageContainer.classList.add("message-container", className);
-      
-        const messageElement = document.createElement("div");
-        messageElement.classList.add("message");
-        messageElement.innerText = message;
-      
-        messageContainer.appendChild(messageElement);
-        chatHistory.appendChild(messageContainer);
-      }
-      
-      async function sendRequest(userMessage) {
-        const response = await fetch(`/get?msg=${userMessage}`);
-        const jsonResponse = await response.json();
-        console.log(jsonResponse);
-        const botMessage = jsonResponse[0]["text"];
-        return botMessage;
-      }
-      
-      
-      
+    <div class="chat-message">
+      <input type="text" id="input-message" placeholder="Type your message...">
+      <button id="send-button">Send</button>
+    </div>
+  </div> -->
 
-    </script>
-  </body>
+  <!-- component -->
+  <div class="flex-1 p:2 sm:p-6 !pt-0 justify-between flex flex-col h-screen">
+    <div class="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
+      <div class="relative flex items-center justify-center w-full">
+        <img
+          src="https://www.majalat.org/sites/default/files/styles/crop_card/public/organisations_logo/logo%20wls.png?itok=9WuvHE3G"
+          width="160px" />
+      </div>
+    </div>
+    <div id="chat-history"
+      class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+      <div class="chat-message">
+        <div class="flex items-end justify-end">
+          <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
+            <div><span class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white ">
+                Hello, how are you ? how can I help you today ?
+            </span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
+      <div class="relative flex">
+        <input id="input-message" type="text" placeholder="Write your message!"
+          class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3">
+        <div class="absolute right-0 items-center inset-y-0 hidden sm:flex">
+          <button id="send-button" type="button"
+            class="inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none">
+            <span class="font-bold">Send</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+              class="h-6 w-6 ml-2 transform rotate-90">
+              <path
+                d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z">
+              </path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <style>
+    .scrollbar-w-2::-webkit-scrollbar {
+      width: 0.25rem;
+      height: 0.25rem;
+    }
+
+    .scrollbar-track-blue-lighter::-webkit-scrollbar-track {
+      --bg-opacity: 1;
+      background-color: #f7fafc;
+      background-color: rgba(247, 250, 252, var(--bg-opacity));
+    }
+
+    .scrollbar-thumb-blue::-webkit-scrollbar-thumb {
+      --bg-opacity: 1;
+      background-color: #edf2f7;
+      background-color: rgba(237, 242, 247, var(--bg-opacity));
+    }
+
+    .scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
+      border-radius: 0.25rem;
+    }
+
+  </style>
+
+  <script>
+    const el = document.getElementById('chat-history')
+    el.scrollTop = el.scrollHeight
+  </script>
+
+  <script>
+    const chatHistory = document.getElementById("chat-history");
+    const inputMessage = document.getElementById("input-message");
+    const sendButton = document.getElementById("send-button");
+
+    sendButton.addEventListener("click", async () => {
+      const userMessage = inputMessage.value.trim();
+      if (userMessage !== "") {
+        addMessage("user", userMessage);
+        const botMessage = await sendRequest(userMessage);
+        inputMessage.value = "";
+        addMessage("bot", botMessage);
+      }
+    });
+
+    function addMessage(who, message) {
+      // const messageContainer = document.createElement("div");
+      // messageContainer.classList.add("message-container", className);
+
+      // const messageElement = document.createElement("div");
+      // messageElement.classList.add("message");
+      // messageElement.innerText = message;
+
+      // messageContainer.appendChild(messageElement);
+      // chatHistory.appendChild(messageContainer);
+      if (who == "user") {
+        chatHistory.innerHTML += `
+        <div class="chat-message">
+          <div class="flex items-end">
+            <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
+              <div><span class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
+              ${message}  
+              </span></div>
+            </div>
+          </div>
+        </div>
+        `
+      } else {
+        chatHistory.innerHTML += `
+        <div class="chat-message">
+          <div class="flex items-end justify-end">
+            <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
+              <div><span class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white ">Your error
+                  message says permission denied, npm global installs must be given root privileges.</span></div>
+            </div>
+          </div>
+        </div>
+        `
+      }
+    }
+
+    async function sendRequest(userMessage) {
+      const response = await fetch(`/get?msg=${userMessage}`);
+      const jsonResponse = await response.json();
+      console.log(jsonResponse);
+      const botMessage = jsonResponse[0]["text"];
+      return botMessage;
+    }
+
+
+
+
+  </script>
+</body>
+
 </html>
