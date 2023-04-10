@@ -7,21 +7,6 @@
 </head>
 
 <body>
-  <!-- <div class="chat-container">
-    <div class="chat-header">
-      <h2>WE LOVE SOUSSE</h2>
-    </div>
-    <div class="chat-history" id="chat-history">
-      <div class="message-container bot-message">
-        <div class="message">Hi there! How can I help you today?</div>
-      </div>
-    </div>
-    <div class="chat-message">
-      <input type="text" id="input-message" placeholder="Type your message...">
-      <button id="send-button">Send</button>
-    </div>
-  </div> -->
-
   <!-- component -->
   <div class="flex-1 p:2 sm:p-6 !pt-0 justify-between flex flex-col h-screen">
     <div class="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
@@ -34,10 +19,10 @@
     <div id="chat-history"
       class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
       <div class="chat-message">
-        <div class="flex items-end justify-end">
-          <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
-            <div><span class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white ">
-                Hello, how are you ? how can I help you today ?
+        <div class="flex items-end">
+          <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
+            <div><span class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
+              Hello, how are you ? how can I help you today ?
             </span></div>
           </div>
         </div>
@@ -121,26 +106,27 @@
       if (who == "user") {
         chatHistory.innerHTML += `
         <div class="chat-message">
-          <div class="flex items-end">
-            <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
-              <div><span class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
-              ${message}  
-              </span></div>
-            </div>
+          <div class="flex items-end justify-end">
+            <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
+              <div><span class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white ">
+                ${message}  
+                </span></div>
+                </div>
           </div>
         </div>
         `
       } else {
-        chatHistory.innerHTML += `
-        <div class="chat-message">
-          <div class="flex items-end justify-end">
-            <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
-              <div><span class="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white ">Your error
-                  message says permission denied, npm global installs must be given root privileges.</span></div>
+          chatHistory.innerHTML += `
+          <div class="chat-message">
+            <div class="flex items-end">
+              <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
+                <div><span class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
+                ${message}  
+                </span></div>
+              </div>
             </div>
           </div>
-        </div>
-        `
+          `
       }
     }
 
